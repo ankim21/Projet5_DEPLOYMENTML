@@ -1,0 +1,26 @@
+# Secrets - never commit these
+.env
+* .pem
+credentials.json
+
+# Python
+
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+*.egg-info/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Data & models (decide per-project)
+*.csv
+!db/sample_data.csv
