@@ -30,15 +30,15 @@ jobs:
     needs: build_job
     runs-on: ubuntu-latest
     steps: # redo steps because each job for github action is on new VM
-    - uses: actions/checkout@v4
-
-    - uses: action/setup-python@v5
-      with:
-        python-version: "3.11"
-        cache: "pip" # local folder on computer where pip saves downloaded installation fiels
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-
-    - name: Run tests  #on log, unit tests must not touch external systems
-      run: pytest --cov=app --cov-report=term
-      ## --cov=app : pytest-cov plugin and =term will print out output report
+      - uses: actions/checkout@v4
+  
+      - uses: action/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip" # local folder on computer where pip saves downloaded installation fiels
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+  
+      - name: Run tests  #on log, unit tests must not touch external systems
+        run: pytest --cov=app --cov-report=term
+        ## --cov=app : pytest-cov plugin and =term will print out output report
