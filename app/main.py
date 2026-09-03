@@ -2,6 +2,9 @@ from fastapi import FastAPI
 
 app = FastAPI(title="Futurisys API")
 
+# @app.get("/")
+# async def root():
+#     return {"message": "Hello World"}
 
 @app.get("/")
 def root():

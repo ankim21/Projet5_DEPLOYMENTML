@@ -20,7 +20,12 @@ Pour cela, nous allons :
 ## Table of contents
 ## Project structure
 ## Prerequisites
+
+
 ## Installation
+1. Clone the repository
+2. 
+
 ## Usage
 ## Testing
 ## Deployment 
