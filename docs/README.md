@@ -1,3 +1,12 @@
+---
+title: Futurisys API
+emoji: 🤖
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+--- 
+
 # Futurisys — ML Model API
 
 Le but de ce projet est de déployer un modèle de machine learning en production.
