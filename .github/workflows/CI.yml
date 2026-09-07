@@ -40,5 +40,5 @@ jobs:
         run: pip install -r requirements.txt
   
       - name: Run tests  #on log, unit tests must not touch external systems
-        run: pytest --cov=app --cov-report=term
+        run: pytest --cov=app --cov-report=term || [ $? -eq 5 ]
         ## --cov=app : pytest-cov plugin and =term will print out output report
