@@ -6,7 +6,14 @@ import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel, ConfigDict, Field
 
-# The model lives at the repo root, one level above app/
+#venv/bin/pip install -r requirements.txt
+#venv/bin/uvicorn app.main:app --port 7861
+
+app = FastAPI(
+    title="Futurisys API",
+    description="Prédiction du risque de départ d'un employé",
+)
+
 MODEL_PATH = Path(__file__).resolve().parent.parent / "modele_attrition.joblib"
 artefact = joblib.load(MODEL_PATH)
 
@@ -117,19 +124,12 @@ class Employee(BaseModel):
 
 assert set(Employee.model_fields) == set(colonnes), "Employee schema does not match the model's columns"
 
-
+# ca veut dire que cette classe la va chercher que ca 
 class Prediction(BaseModel):
     probabilite_depart: float
     seuil: float
     prediction: int
     label: str
-
-
-app = FastAPI(
-    title="Futurisys API",
-    description="Prédiction du risque de départ d'un employé",
-)
-
 
 @app.get("/")
 def root():
@@ -144,11 +144,26 @@ def health():
 @app.post("/predict", response_model=Prediction)
 def predict(employe: Employee):
     X = pd.DataFrame([employe.model_dump()])[colonnes]
+    #employe.model_dump() - takes pydantic obj into python dic - panda dtaframe - then ml pipeline 
     proba = float(pipeline.predict_proba(X)[0, 1])
     prediction = int(proba >= seuil)
     return Prediction(
         probabilite_depart=proba,
         seuil=seuil,
         prediction=prediction,
-        label="Départ probable" if prediction else "Reste probablement",
+        label="Départ probable" if prediction else "Reste probable",
     )
+
+
+## NEXT TIME:
+# for each dossier, re-organize par dossier 
+# la partie app, data, script, tests
+# postsqlgre - data = 
+# database - je mets tous pydantic; 
+# modele - je mets modele
+
+# etape 4: pour postsqlgre - 
+# CD 
+
+
+## hugging face - look at my application without my help -- no local 
