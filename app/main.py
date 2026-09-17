@@ -5,6 +5,7 @@ import joblib
 import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel, ConfigDict, Field
+from enum import Enum
 
 #venv/bin/pip install -r requirements.txt
 #venv/bin/uvicorn app.main:app --port 7861
@@ -61,6 +62,37 @@ EXEMPLE_EMPLOYEE = {
     "aucune_participation_pee": 0,
 }
 
+# ENUM CLASSES========================================================
+
+class TypeStatutMartial(str, Enum):
+    CELIBATAIRE = "Célibataire"
+    DIVORCE = "Divorcé(e)"
+    MARIE = "Marié(e)"
+
+class TypeDepartment(str, Enum):
+    COMMERICIAL = "Commercial"
+    CONSULTING = "Consulting"
+    HR = "Ressources Humaines"
+
+class TypePost(str, Enum):
+    ASSDIRECTION = "Assistant de Direction"
+    COMM = "Cadre Commercial" 
+    CONSULT ="Consultant"
+    DIRTECH = "Directeur Technique"
+    MANAGER ="Manager"
+    COMMREP = "Représentant Commercial"
+    HR = "Ressources Humaines"
+    SENMANAGER = "Senior Manager"
+    TECHLEAD = "Tech Lead"
+
+class TypeEtude (str, Enum):
+    AUTRE = "Autre"
+    ENTREPRENDRE = "Entrepreunariat"
+    INFRA = "Infra & Cloud"
+    MARKETING = "Marketing"
+    HR = "Ressources Humaines"
+    DIGITALE = "Transformation Digitale"
+# ========================================================
 
 class Employee(BaseModel):
     model_config = ConfigDict(json_schema_extra={"examples": [EXEMPLE_EMPLOYEE]})
@@ -68,19 +100,9 @@ class Employee(BaseModel):
     age: int = Field(ge=0)
     genre: Literal["F", "M"]
     revenu_mensuel: float = Field(ge=0)
-    statut_marital: Literal["Célibataire", "Divorcé(e)", "Marié(e)"]
-    departement: Literal["Commercial", "Consulting", "Ressources Humaines"]
-    poste: Literal[
-        "Assistant de Direction",
-        "Cadre Commercial",
-        "Consultant",
-        "Directeur Technique",
-        "Manager",
-        "Représentant Commercial",
-        "Ressources Humaines",
-        "Senior Manager",
-        "Tech Lead",
-    ]
+    statut_marital: TypeStatutMartial
+    departement: TypeDepartment
+    poste: TypePost
     nombre_experiences_precedentes: int = Field(ge=0)
     annee_experience_totale: int = Field(ge=0)
     annees_dans_l_entreprise: int = Field(ge=0)
@@ -89,14 +111,7 @@ class Employee(BaseModel):
     nb_formations_suivies: int = Field(ge=0)
     distance_domicile_travail: float = Field(ge=0)
     niveau_education: Literal[1, 2, 3, 4, 5]
-    domaine_etude: Literal[
-        "Autre",
-        "Entrepreunariat",
-        "Infra & Cloud",
-        "Marketing",
-        "Ressources Humaines",
-        "Transformation Digitale",
-    ]
+    domaine_etude: TypeEtude
     frequence_deplacement: Literal["Aucun", "Frequent", "Occasionnel"]
     annees_depuis_la_derniere_promotion: int = Field(ge=0)
     annes_sous_responsable_actuel: int = Field(ge=0)
@@ -163,7 +178,5 @@ def predict(employe: Employee):
 # modele - je mets modele
 
 # etape 4: pour postsqlgre - 
-# CD 
-
 
 ## hugging face - look at my application without my help -- no local 
