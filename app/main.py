@@ -1,55 +1,31 @@
-from fastapi import FastAPI
+"""API.py is only the application
+app/schemas.py (entrées/sorties), app/service.py (enchaînement),app/dependencies.py (session), 
+modele/ (modèle et features), db/ (base de données).
+"""
 
-app = FastAPI(title="Futurisys API")
+from fastapi import Depends, FastAPI
+from sqlalchemy.orm import Session
 
-# @app.get("/")
-# async def root():
-#     return {"message": "Hello World"}
+from app.dependencies import get_session
+from app.schemas import Employee, Prediction
+from app.service import predire_et_enregistrer
 
-# @app.get("/")
-# def root():
-#     return {"status": "ok"}
-
-
-# @app.get("/health")
-# def health():
-#     return {"status": "healthy"}
-
-@app.get("/hello")
-def hello(name: str):
-    return {"message": f"Hello {name}"}
-
-# so if app is deployed, and another service calls:
-# GET /hello?name=Alice
-# we get : "message": "Hello Alice"
-
-
-from pydantic import BaseModel
-
-class User(BaseModel):
-    name: str
-    age: int
-    email: str
-
-user = User(
-    name="Alice",
-    age=32,
-    email="alice@example.com"
+app = FastAPI(
+    title="Futurisys API",
+    description="Prédiction du risque de départ d'un employé",
 )
 
-## if we mix them:
 
-class UserType(BaseModel):
-    name: str
-    age: int
+@app.get("/")
+def root():
+    return {"message": "Futurisys API — voir /docs -- sinon pas d'affichage"}
 
 
-@app.post("/users")
-def create_user(user: UserType):
-    return {
-        "message": f"Created {user.name}",
-        "age": user.age
-    }
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
-#FAST API receives HTTP request, FastAPI gives function a proper User object
 
+@app.post("/predict", response_model=Prediction)
+def predict(employe: Employee, session: Session = Depends(get_session)) -> Prediction:
+    return predire_et_enregistrer(session, employe)

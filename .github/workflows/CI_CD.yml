@@ -40,5 +40,19 @@ jobs:
         run: pip install -r requirements.txt
   
       - name: Run tests  #on log, unit tests must not touch external systems
-        run: pytest --cov=app --cov-report=term
+        run: pytest --cov=app --cov=db --cov=modele --cov-report=term
         ## --cov=app : pytest-cov plugin and =term will print out output report
+  deploy_job:
+    name: Deploy to Hugging Face
+    needs: test_job # need to test cobs
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: huggingface/hub-sync@v0.1.0   # official HF action
+        with:
+          github_repo_id: ${{ github.repository }}
+          huggingface_repo_id: anchaekim/futurisys
+          hf_token: ${{ secrets.HF_TOKEN }}
+          space_sdk: docker # the default is gradio, docker- may change, check with Fernanda 
+  
