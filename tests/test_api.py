@@ -100,15 +100,14 @@ def test_base_indisponible_pas_de_prediction():
     finally:
         app.dependency_overrides.clear()
 
-    assert response.status_code == 503
+    assert response.status_code == 503 # assert permt de verifier les elements que nous souhaitons valider
 
 
 # VALIDATION (rien n'atteint le modèle, donc rien n'est enregistré) =====
 
-
 def test_predict_categorie_inconnue(client, db):
-    payload = {**EXEMPLE_EMPLOYEE, "departement": "Marketing"}
-    response = client.post("/predict", json=payload)
+    payload = {**EXEMPLE_EMPLOYEE, "departement": "Marketing"} ## arrange : prepare input
+    response = client.post("/predict", json=payload) ## call the ting
     assert response.status_code == 422
     assert compter(db, PredictionInput) == 0
 

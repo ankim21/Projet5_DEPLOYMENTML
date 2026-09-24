@@ -1,4 +1,4 @@
-"""Outillage commun aux tests : une base SQLite jetable à la place de PostgreSQL."""
+"""une base SQLite instead of PostgreSQL."""
 
 import pytest
 from fastapi.testclient import TestClient
@@ -12,7 +12,6 @@ from db.models import Base
 
 
 def moteur_sqlite(creer_tables: bool = True):
-    """Base SQLite en mémoire partagée entre threads (TestClient exécute l'API dans un autre thread)."""
     engine = create_engine(
         "sqlite://",
         connect_args={"check_same_thread": False},

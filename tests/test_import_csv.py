@@ -9,7 +9,6 @@ from db.models import Base, Employee, Evaluation, Sondage
 
 # petits DataFrames au format des vrais CSV (les CSV sont hors git)
 
-
 def faux_csv(ids=(1, 2)):
     sirh = pd.DataFrame(
         {

@@ -207,8 +207,6 @@ class ModelVersion(Base):
 
 
 class PredictionInput(Base):
-    """Une ligne par appel au modele : les features CRU recues."""
-
     __tablename__ = "prediction_input"
     __table_args__ = (
         check_in("genre", GENRES),

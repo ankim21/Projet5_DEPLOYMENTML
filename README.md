@@ -16,7 +16,7 @@ employee leaving the company (attrition), and was trained in a previous project.
 To deploy it, the project provides:
 - a **FastAPI** API to expose the model
 - a **PostgreSQL** database holding the dataset and a full trace of every exchange with the model
-- **unit tests** with Pytest to guarantee reliability
+- **unit tests** and **functional** with Pytest to guarantee reliability
 - **Git / GitHub Actions** for version control and continuous integration
 
 ## Table of contents
@@ -189,6 +189,9 @@ Response codes:
 The tests need no PostgreSQL: they run against a throwaway in-memory SQLite database, which is
 why they also work in GitHub Actions.
 
+pytest answers: does my code give the right results? It runs test functions and checks my ASSERTS
+coverage answer: which lines of my code did tests actually run? Only records which lines were executed. 
+
 ```bash
 venv/bin/python -m pytest -q
 venv/bin/python -m pytest --cov=app --cov=db --cov=modele --cov-report=term
@@ -239,7 +242,7 @@ Consequences on the deployed Space:
 | Route on the Space | Behaviour |
 |---|---|
 | `/`, `/health`, `/docs` | work normally |
-| `/predict` | returns **503** with `"Base de données non configurée (DATABASE_URL manquante)"` |
+| `/predict` | returns **405** with `"Method not allowed"` |
 
 This is intentional, not a bug. The API refuses to predict when it cannot record the exchange,
 because full traceability is a requirement of the project. The Space therefore demonstrates the
