@@ -24,3 +24,5 @@ htmlcov/
 # Data & models (decide per-project)
 *.csv
 !db/sample_data.csv
+# donnees RH + notebook d'entrainement : jamais dans git (RGPD), ni dans l'image Docker
+data/

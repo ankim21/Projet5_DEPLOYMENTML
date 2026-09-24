@@ -23,3 +23,7 @@ numpy==2.4.6
 pandas==3.0.3
 joblib==1.5.3
 httpx==0.28.1
+# base de données
+SQLAlchemy==2.0.54
+psycopg[binary]==3.3.5
+python-dotenv==1.2.3
