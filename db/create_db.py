@@ -5,6 +5,22 @@ Usage (depuis la racine du projet) :
     venv/bin/python -m db.create_db --reset   # supprime puis recrée les tables
 """
 
+## skeleton: creates base PostgreSQL, ses tables, et enregistre la version du modele
+
+# def main(): 
+#     pass # do nothing
+
+# if __name__ == "__main__":
+#     main()
+## create database if missing
+## need table because in PostgreSQL, every connection must point to a specific database
+## so to crate ma_base, need to connect to ma_base : 
+#create tables with --reset
+# save model version
+#wire all in main
+
+
+
 import argparse
 
 from sqlalchemy import create_engine, func, select, text
@@ -17,9 +33,8 @@ from modele.pred import MODEL_NAME, MODEL_PATH, seuil
 
 
 def creer_database_si_absente(database_url: str) -> None:
-    """CREATE DATABASE ne peut pas tourner dans une transaction ni sur la base
-    qu'on veut créer : on se connecte à la base système 'postgres' en AUTOCOMMIT."""
-    url = make_url(database_url)
+    """CREATE DATABASE"""
+    url = make_url(database_url) # point to our base
     nom_db = url.database
     admin_engine = create_engine(
         url.set(database="postgres"), isolation_level="AUTOCOMMIT"
@@ -41,7 +56,7 @@ def creer_tables(engine: Engine, reset: bool = False) -> None:
     if reset:
         Base.metadata.drop_all(engine)
         print("Tables supprimées")
-    # create_all ne recrée pas une table existante
+    # create_all doesnt remake an existing table
     Base.metadata.create_all(engine)
     print("Tables :", ", ".join(Base.metadata.tables))
 
