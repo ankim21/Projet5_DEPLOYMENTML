@@ -1,4 +1,4 @@
-"""Crée la base PostgreSQL, ses tables, et enregistre la version du modèle.
+"""Crates the PostgreSQK  la base PostgreSQL, ses tables, et enregistre la version du modèle.
 
 Usage (depuis la racine du projet) :
     venv/bin/python -m db.create_db           # crée ce qui manque

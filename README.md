@@ -287,4 +287,4 @@ opened to real users, an API key or OAuth would be required, since the requests 
 
 ## Author
 
-Andrea Kim — OpenClassrooms project 5 (deploying a model in production).
+Andrea Kim — OpenClassrooms Project 5 (Deploying a Model in Production).
