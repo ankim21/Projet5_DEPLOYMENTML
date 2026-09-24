@@ -49,10 +49,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: huggingface/hub-sync@v0.1.0   # official HF action
+      - uses: huggingface/hub-sync@v0.3.0   # official HF action ; v0.1.0 appelait
+        # `hf repo create`, commande renommée `hf repos create` dans le CLI hf
         with:
           github_repo_id: ${{ github.repository }}
           huggingface_repo_id: anchaekim/futurisys
           hf_token: ${{ secrets.HF_TOKEN }}
+          # CLI hf figé : le 24/09/2026 la v2.0.0 a renommé `repo` en `repos`
+          # et a cassé le deploiement. Sans ce pin, le job depend de la derniere version.
+          hf_version: "2.0.0"
           space_sdk: docker # the default is gradio, docker- may change, check with Fernanda 
   
