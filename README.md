@@ -77,6 +77,7 @@ data/         the 3 CSV files + the training notebook (not in git: HR data)
 docs/         database schema and technical choices
 tests/        64 tests (pytest)
 ```
+https://anchaekim-futurisys.hf.space/docs
 
 ## Prerequisites
 
